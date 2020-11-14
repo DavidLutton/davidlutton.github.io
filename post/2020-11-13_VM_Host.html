@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+
+    <!-- Prism -->    
+    <link rel="stylesheet" href="/css/prism.css" data-noprefix />
+    <script src="/js/prism.js"></script>
+    <!-- Prism -->    
+
+    
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- MathJax -->
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+
+    <link rel="stylesheet" href="/css/site.css"/>
+
+    <title>VM Host on Fedora</title>
+  </head>
+  <body>
+    
+    <!-- Navigation -->
+    <nav class="topnav">
+        <a href="/#">Home</a>
+        <a href="https://twitter.com/2048">@2048<i class='fa fa-2x fa-twitter'></i></a>
+        <a href="https://github.com/DavidLutton/">gh/DavidLutton<i class='fa fa-2x fa-github'></i></a>
+        <a href="/rss.xml">RSS</a>
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    </br>
+    <header>
+        <h1>VM Host on Fedora</h1>
+        <hr>
+        <span class="subheading">by David Lutton, 2020/11/14</span>
+    </header>
+
+    <div class="container">
+<h1>Virtual Machine Host</h1>
+<p>Using <a href="https://fedoraproject.org/wiki/Fedora_Project_Wiki">Fedora</a> Linux  as a VM host and <a href="https://cockpit-project.org/">Cockpit Project</a> to manage the host.</p>
+<h2>Sources</h2>
+<h3>Fedora</h3>
+<p><a href="https://getfedora.org">Get Fedora</a> Server edition</p>
+<h3>Windows</h3>
+<p>Obtain a Windows ISO by running the <a href="https://www.microsoft.com/en-gb/software-download/windows10">Create Windows 10 installation media</a> tool from Microsoft</p>
+<h3>Virtio</h3>
+<p>Obtain the Virtio ISO (Virtual IO drivers for Windows) from <a href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/">Fedora</a></p>
+<h2>Installation Process</h2>
+<ul>
+<li>Install on a machine</li>
+<li>Follow prompts to install</li>
+<li>Reboot</li>
+<li>Login</li>
+</ul>
+<pre><code class="language-bash">sudo dnf update
+sudo dnf upgrade
+sudo dnf install libvirt cockpit cockpit-machines
+
+# Enable the services
+sudo systemctl enable libvirtd --now
+sudo systemctl enable cockpit.socket --now
+
+# Not on by default on workstation
+sudo firewall-cmd --zone=public --add-service=cockpit --permanent
+sudo firewall-cmd --reload
+ 
+ip a  # Get the IP address
+</code></pre>
+<h2>Cockpit</h2>
+<p>Connect the Cockpit interface on this machine from a web browser at its IP address on port 9090</p>
+<ul>
+<li>Go to the <strong>Networking</strong> tab</li>
+<li>Click <strong>Add Bridge</strong>
+<ul>
+<li>Create <strong>bridge0</strong></li>
+<li>With ports <strong>~eth0</strong></li>
+</ul>
+</li>
+</ul>
+<p>Machine may obtain different IP address after creating bridge<br />
+Reconnect as needed</p>
+<p>Load install media to somewhere accessible to libvirt</p>
+<h2>Installation of Windows 10 in a VM</h2>
+<ul>
+<li>Go to the <strong>Virtual Machines</strong> tab and click <strong>Create VM</strong></li>
+<li>Installation type <strong>Local install media</strong></li>
+<li>Installation source <strong>/var/lib/libvirt/images/*.iso</strong></li>
+<li>Operating System <strong>Microsoft Windows</strong></li>
+<li>Allocate storage and memory
+<ul>
+<li>This can be extended later</li>
+</ul>
+</li>
+<li>Deselect <strong>immediately start VM</strong></li>
+<li>Click <strong>Create</strong></li>
+<li>Click on the created VM name</li>
+<li>In the <strong>Disks</strong> section:
+<ul>
+<li>Edit the <strong>device</strong> disk to bus <strong>virtio</strong> and press <strong>Save</strong></li>
+<li>Click <strong>Add Disk</strong></li>
+<li>Use <strong>existing</strong> and select Volume <strong>virtio-win.iso</strong></li>
+<li>Set bus to <strong>SATA</strong></li>
+<li>Press <strong>Add</strong></li>
+</ul>
+</li>
+<li>In the <strong>Network</strong> section:
+<ul>
+<li>Change the interface type to <strong>bridge to LAN</strong></li>
+<li>bridge to <strong>bridge0</strong></li>
+<li>model to <strong>e1000e</strong></li>
+</ul>
+</li>
+<li>Click <strong>Install</strong></li>
+</ul>
+<h2>During installation of Windows 10</h2>
+<p>Windows 10 needs to load a driver to access virtio storage</p>
+<p>At the point it is needed click to <strong>Manually install a driver</strong></p>
+<p>From the virtio ISO select the <strong>E:\viostor\w10\amd64</strong> directory
+The driver should be loaded and storage will become available
+Proceed to install normally</p>
+<h3>After the installation</h3>
+<p>With Windows running navigate to the virtio ISO and run the installer to get the drivers for network and memory management drivers</p>
+<ul>
+<li>Go to the <strong>Virtual Machines</strong> tab click on the created VM name</li>
+<li>In the <strong>Network</strong> section
+<ul>
+<li>Change the interface model to <strong>virtio</strong></li>
+</ul>
+</li>
+<li>In the <strong>Disks</strong> section
+<ul>
+<li>Remove <strong>VirtIO.iso</strong> and <strong>Windows10_????.iso</strong></li>
+</ul>
+</li>
+</ul>
+<p>After rebooting the VM networking will be easier for the VM and host to process</p>
+<h1>Hardware</h1>
+<ul>
+<li><a href="https://www.ebuyer.com/920066-dell-9yp37-poweredge-t40-tower-server-9yp37">Dell PowerEdge T40</a>
+<ul>
+<li>Xeon E-2224G 3.5 GHz</li>
+<li>8GB RAM</li>
+<li>1TB SATA HDD</li>
+</ul>
+</li>
+<li><a href="https://www.ebuyer.com/1125511-kingston-ktd-pe426e-16g-ddr4-16-gb-dimm-288-pin-ktd-pe426e-16g">16G Ram</a></li>
+<li><a href="https://www.ebuyer.com/1125511-kingston-ktd-pe426e-16g-ddr4-16-gb-dimm-288-pin-ktd-pe426e-16g">16G Ram</a></li>
+<li><a href="https://www.ebuyer.com/816612-startech-com-m-2-pcie-ssd-adapter-x4-pcie-3-0-nvme-m-2-pex4m2e1">M.2 PCIe SSD Adapter</a></li>
+</ul>
+<h1>Check</h1>
+<ul>
+<li><a href="https://www.servethehome.com/wd-red-smr-vs-cmr-tested-avoid-red-smr/">WD Red SMR vs CMR Tested Avoid Red SMR | ServeTheHome</a></li>
+</ul>
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="copyright text-muted">Copyright &copy; David Lutton 2020/11/14</p>
+    </footer>
+
+</body>
+</html>
