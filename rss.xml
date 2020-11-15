@@ -7,7 +7,7 @@
             A collection of technology articles
         </description>
         <link>https://.github.io/#blog</link>
-        <lastBuildDate>Sat, 14 Nov 2020 22:26:05 -0000</lastBuildDate>
+        <lastBuildDate>Sun, 15 Nov 2020 22:59:34 -0000</lastBuildDate>
         <pubDate>Sat, 4 Jan 2020 19:15:54 -0500</pubDate>
         <atom:link href="https://.github.io/rss.xml" rel="self" type="application/rss+xml" />
         
@@ -23,14 +23,14 @@
         </item>
         
         <item>
-            <title>Python Packages</title>
+            <title>Python Notes</title>
             <description>
                 None
             </description>
-            <link>https://www.dalun.space/post/2020-11-14_Python_Packages.html</link>
+            <link>https://www.dalun.space/post/2020-11-14_Python_Notes.html</link>
             <pubDate>Sat, 14 Nov 2020 00:00:00 -0000</pubDate>
             <dc:creator>David Lutton</dc:creator>
-            <guid>https://www.dalun.space/post/2020-11-14_Python_Packages.html</guid>
+            <guid>https://www.dalun.space/post/2020-11-14_Python_Notes.html</guid>
         </item>
         
         <item>
@@ -53,17 +53,6 @@
             <pubDate>Sat, 14 Nov 2020 00:00:00 -0000</pubDate>
             <dc:creator>David Lutton</dc:creator>
             <guid>https://www.dalun.space/post/2020-11-14_VNA.html</guid>
-        </item>
-        
-        <item>
-            <title>Linux Packages</title>
-            <description>
-                None
-            </description>
-            <link>https://www.dalun.space/post/2020-11-13_Linux_Packages.html</link>
-            <pubDate>Sat, 14 Nov 2020 00:00:00 -0000</pubDate>
-            <dc:creator>David Lutton</dc:creator>
-            <guid>https://www.dalun.space/post/2020-11-13_Linux_Packages.html</guid>
         </item>
         
         <item>

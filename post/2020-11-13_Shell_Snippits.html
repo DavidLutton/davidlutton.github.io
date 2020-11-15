@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+
+    <!-- Prism -->    
+    <link rel="stylesheet" href="/css/prism.css" data-noprefix />
+    <script src="/js/prism.js"></script>
+    <!-- Prism -->    
+
+    
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- MathJax -->
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+
+    <link rel="stylesheet" href="/css/site.css"/>
+
+    <title>Shell Snippits</title>
+  </head>
+  <body>
+    
+    <!-- Navigation -->
+    <nav class="topnav">
+        <a href="/#">Home</a>
+        <a href="https://twitter.com/2048">@2048<i class='fa fa-2x fa-twitter'></i></a>
+        <a href="https://github.com/DavidLutton/">gh/DavidLutton<i class='fa fa-2x fa-github'></i></a>
+        <a href="/rss.xml">RSS</a>
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    </br>
+    <header>
+        <h1>Shell Snippits</h1>
+        <hr>
+        <span class="subheading">by David Lutton, 2020/11/14</span>
+    </header>
+
+    <div class="container"><pre><code class="language-bash">find -iname &quot;*.ext&quot; - exec grep -Hi -C 5 'term' &quot;{}&quot; \;
+# find ext and grep term, showing filename and 5 lines above and below match
+
+find . -name &quot;\$*&quot; -delete
+# find and delete Microsoft Office style temporary files
+
+find . -name &quot;Thumbs.db&quot; -delete
+# find and delete Thumbs.db files
+
+qrencode -t UTF8 'String to encode'
+# Encode string to QR code
+
+function ..(){ cd .. ; }
+function ...(){ cd ../.. ; }
+function ....(){ cd ../../.. ; }
+function .....(){ cd ../../../.. ; }
+
+
+function qr(){ qrencode -t ANSI &quot;$@&quot; ; }
+
+# rdfind
+
+function title(){ echo -ne &quot;\033]0;$@\007&quot; ; }
+function bashrc(){ . ~/.bashrc }
+function avahi(){ avahi-browse -at &quot;$@&quot; }
+
+
+function gh(){ git clone &quot;git://github.com/$@&quot; }
+
+function lh(){ ls -lhs ; }
+
+function mkcd(){
+# mkdir, cd into it
+mkdir -p &quot;$*&quot;
+cd &quot;$*&quot;
+}
+function mkdircd(){ mkdir -p $@ &amp;&amp; cd $@ ; }
+function sayit(){ echo $@ | espeak -s 140 -v en-uk-rp --stdout | paplay -n espeak ; }
+
+&quot;sudo btrfs subvolume snapshot / /btrfs_$(date +%Y-%m-%d_%H-%M)&quot;
+
+
+function dum(){ du -h | grep ^[0-9.]*M | sort -rn | head -n 20 ; }
+# SRC=&quot;https://raymii.org/s/snippets/Arch-bash-pacman-bashrc-tips.html&quot;
+
+function syslogtail() { tail -f -n 50 /var/log/syslog ; }
+find . -size 0 -type f  -exec rm \&quot;{}\&quot; -rfv  \;&quot; # Delete zero size files
+function dum(){
+	du -h | grep ^[0-9.]*M | sort -rn | head -n 20
+	# SRC=&quot;https://raymii.org/s/snippets/Arch-bash-pacman-bashrc-tips.html&quot;
+}
+
+mvprefix(){ mv $1 $2$1 ; }
+mvsuffix(){ mv $1 $1$2 ; }
+
+
+function deup(){
+	OUTF=rem-duplicates.sh;
+	echo &quot;#! /bin/sh&quot; &gt; $OUTF;
+	find &quot;$@&quot; -type f -printf &quot;%s\n&quot; | sort -n | uniq -d |
+		xargs -I@@ -n1 find &quot;$@&quot; -type f -size @@c -exec md5sum {} \; |
+		sort --key=1,32 | uniq -w 32 -d --all-repeated=separate |
+		sed -r 's/^[0-9a-f]*( )*//;s/([^a-zA-Z0-9./_-])/\\\1/g;s/(.+)/#rm \1/' &gt;&gt; $OUTF;
+	chmod a+x $OUTF
+	ls -l $OUTF
+	# SRC=&quot;http://elonen.iki.fi/code/misc-notes/remove-duplicate-files/&quot;
+}
+
+</code></pre>
+<pre><code class="language-bash">
+
+#BBLUE='\[\033[1;34m\]'
+
+#BLUE='\[\033[0;34\]'
+#NORMAL='\[\033[00m\]'
+
+A='\[\033[0;37m\]' # Gray
+B='\[\033[0;36m\]' # Light Blue
+
+Y='\[\033[1;33m\]' # Bright Yellow
+G='\[\033[1;32m\]' # Green
+R='\[\033[1;31m\]' # Red
+
+N='\[\033[00m\]'
+L='─'
+U='┌'
+D='└'
+C=&quot;●&quot;
+P=&quot;$L$L$L$L$L$L$L&quot;
+PS1=&quot;$B$U$L$N[$R~\u$N]$B$L$N[$Y@\h$N]$B$L$N[$A\T$N]$B$P$N[$Y\w$N]\n$B$D$G&gt;$N&quot;
+
+</code></pre>
+<pre><code class="language-bash">#!/bin/bash
+txtblk='\e[0;30m' # Black - Regular
+txtred='\e[0;31m' # Red
+txtgrn='\e[0;32m' # Green
+txtylw='\e[0;33m' # Yellow
+txtblu='\e[0;34m' # Blue
+txtpur='\e[0;35m' # Purple
+txtcyn='\e[0;36m' # Cyan
+txtwht='\e[0;37m' # White
+bldblk='\e[1;30m' # Black - Bold
+bldred='\e[1;31m' # Red
+bldgrn='\e[1;32m' # Green
+bldylw='\e[1;33m' # Yellow
+bldblu='\e[1;34m' # Blue
+bldpur='\e[1;35m' # Purple
+bldcyn='\e[1;36m' # Cyan
+bldwht='\e[1;37m' # White
+unkblk='\e[4;30m' # Black - Underline
+undred='\e[4;31m' # Red
+undgrn='\e[4;32m' # Green
+undylw='\e[4;33m' # Yellow
+undblu='\e[4;34m' # Blue
+undpur='\e[4;35m' # Purple
+undcyn='\e[4;36m' # Cyan
+undwht='\e[4;37m' # White
+bakblk='\e[40m'   # Black - Background
+bakred='\e[41m'   # Red
+bakgrn='\e[42m'   # Green
+bakylw='\e[43m'   # Yellow
+bakblu='\e[44m'   # Blue
+bakpur='\e[45m'   # Purple
+bakcyn='\e[46m'   # Cyan
+bakwht='\e[47m'   # White
+txtrst='\e[0m'
+
+SEG[0]=&quot;$txtcyn┌$txtrst&quot;
+SEG[1]=&quot;$bldwht[$txtrst$bldred~\u$txtrst$bldwht]&quot;
+SEG[2]=&quot;$txtcyn─$txtrst$bldwht[$txtrst$bldylw@\h$txtrst$bldwht]&quot;
+SEG[3]=&quot;$txtcyn─$txtrst$bldwht[$txtrst$txtcyn\w$txtrst$bldwht]$txtrst$txtcyn$txtcyn─$txtrst=&quot;
+
+SEG[4]=&quot;$bldwht($txtrst$txtgrn&quot;
+SEG[5]='$(ls -1 | wc -l | sed &quot;s: ::g&quot;) files, $(ls -lah | grep -m 1 total | sed &quot;s/total //&quot;)'
+SEG[6]=&quot;$txtrst$bldwht)$txtrst&quot;
+
+SEG[7]=&quot;$bldcyn─$txtrst$bldwht[$txtrst$(date +%k:%M)$bldwht]$txtrst&quot;
+#$bldcyn─$txtrst$bldgrn&gt;$txtrst&quot;
+SEG[8]=&quot;\n$txtcyn└$bldgrn$txtrst$bldcyn&gt;&quot;
+#┌[\u]─[@\h]─[\w]
+#└($(CMD))─[\T]─&gt;
+#$&gt;
+
+PS1=
+for I in $(seq 0 $(( ${#SEG[@]} - 1 )) )
+do
+	PS1=&quot;$PS1${SEG[$I]}\e[0m&quot;
+done
+</code></pre>
+<pre><code class="language-bash">
+#bakblk='\e[40m'   # Black - Background
+#bakred='\e[41m'   # Red
+#bakgrn='\e[42m'   # Green
+#bakylw='\e[43m'   # Yellow
+#bakblu='\e[44m'   # Blue
+#bakpur='\e[45m'   # Purple
+#bakcyn='\e[46m'   # Cyan
+#bakwht='\e[47m'   # White
+#txtrst='\e[0m'
+
+#SEG[5]=&quot;$bldcyn─$txtrst$bldwht[$txtrst$(date +%k:%M | tr -d '\n')$bldwht]&quot;
+#$bldcyn─$txtrst$bldgrn&gt;$txtrst&quot;
+#SEG[6]=&quot;\n$txtcyn└$bldgrn$txtrst$bldcyn&gt;&quot;
+
+##PS1=&quot;$txtrst$txtcyn┌$txtrst$bldwht[$txtrst$bldred~\u$txtrst$bldwht]$txtrst$txtcyn─$txtrst$bldwht[$txtrst$bldylw@\h$txtrst$bldwht]$txtrst$txtcyn─$txtrst$bldwht[$txtrst$txtcyn\w$txtrst$bldwht]$txtrst$txtcyn$txtcyn─$txtrst$bldwht($txtrst$txtgrn&quot;'$(ls -1 | wc -l | sed &quot;s: ::g&quot; | tr -d &quot;\n&quot;) files, $(ls -lah | grep -m 1 total | sed &quot;s/total //&quot; | tr -d &quot;\n&quot; )'&quot;$bldwht)$txtrst$bldcyn─$txtrst$bldwht[$txtrst&quot;'$(date +%k:%M | tr -d '\n')'&quot;$bldwht]$txtrst\n$txtcyn└$bldgrn$txtrst$bldcyn&gt;$txtrst$txtrst&quot;
+#┌[\u]─[@\h]─[\w]
+#└($(CMD))─[\T]─&gt;
+#$&gt;
+##PS1=&quot;\[\033[0;36m\]┌─\[\033[00m\][\[\033[1;31m\]~\u\[\033[00m\]]\[\033[0;36m\]─\[\033[00m\][\[\033[1;33m\]@\h\[\033[00m\]]\[\033[0;36m\]─\[\033[00m\][\[\033[0;37m\]\T\[\033[00m\]]\[\033[0;36m\]─\[\033[00m\][\[\033[1;33m\]\w\[\033[00m\]]\n\[\033[0;36m\]└\[\033[1;32m\]&gt;\[\033[00m\]&quot;
+#PS1=&quot;$txtcyn┌─$[$bldred~\u$txtrst]$txtcyn─$txtrst[$bldylw@\h$txtrst]$txtcyn─$txtrst[$txtwht\T$txtrst]$txtcyn─$txtrst[$bldylw\w$txtrst]\n$txtcyn└$bldgrn&gt;$txtrst&quot;
+
+#PS1=&quot;$txtcyn┌─\[\033[00m\][$bldred~\u\[\033[00m\]]$txtcyn─\[\033[00m\][$bldylw@\h\[\033[00m\]]$txtcyn─\[\033[00m\][$txtwht\T\[\033[00m\]]$txtcyn─\[\033[00m\][$bldylw\w\[\033[00m\]]\n$txtcyn└$bldgrn&gt;\[\033[00m\]&quot;
+
+
+
+#PS1=''
+#for I in $(seq 0 $(( ${#SEG[@]} - 1 )) )
+#do
+#	PS1=&quot;$PS1${SEG[$I]}\e[0m&quot;
+#done
+
+
+#$(git remote -v 2&gt;/dev/null | grep -e '^origin.*(fetch)' | sed 's/^.*\/\(.*\)\.git.*/\1:/')
+#$(git branch 2&gt;/dev/null | grep -e '\* ' | sed 's/^..\(.*\)/\1/')'
+#$(__git_ps1 &quot;(%s)&quot;)
+
+
+#BBLUE='\[\033[1;34m\]'
+
+#BLUE='\[\033[0;34\]'
+#NORMAL='\[\033[00m\]'
+
+#A='\[\033[0;37m\]' # Gray
+#B='\[\033[0;36m\]' # Light Blue
+
+#Y='\[\033[1;33m\]' # Bright Yellow
+#G='\[\033[1;32m\]' # Green
+#R='\[\033[1;31m\]' # Red
+
+#N='\[\033[00m\]'
+#L='─'
+#U='┌'
+#D='└'
+#C=&quot;●&quot;
+#P=&quot;$L$L$L$L$L$L$L&quot;
+#P=&quot;$L&quot;
+#PS1=&quot;$B$U$L$N[$R~\u$N]$B$L$N[$Y@\h$N]$B$L$N[$A\T$N]$B$P$N[$Y\w$N]\n$B$D$G&gt;$N&quot;
+
+
+#PS1=&quot;$B$U$L$N[$R~\u$N]$B$L$N[$Y@\h$N]$B$L$N[$A\T$N]$B$P$N[$Y\w$N]$B$D$G&gt;$N&quot;
+#PS1=&quot;\[\033[1;30m\][\[\033[1;34m\]\u\[\033[1;30m\]@\[\033[0;35m\]\h\[\033[1;30m\]] \[\033[0;37m\]\W \[\033[1;30m\]\$\[\033[0m\] &quot; 
+
+#PS1=&quot;\`if [ \$? = 0 ]; then echo \[\e[33m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\`[\u@\h:\w]\\$ &quot;
+#PROMPT_COMMAND='PS1=&quot;\[\033[0;33m\][\!]\`if [[ \$? = &quot;0&quot; ]]; then echo &quot;\\[\\033[32m\\]&quot;; else echo &quot;\\[\\033[31m\\]&quot;; fi\`[\u.\h: \`if [[ `pwd|wc -c|tr -d &quot; &quot;` &gt; 18 ]]; then echo &quot;\\W&quot;; else echo &quot;\\w&quot;; fi\`]\$\[\033[0m\] &quot;; echo -ne &quot;\033]0;`hostname -s`:`pwd`\007&quot;'
+#PS1=&quot;[\[\033[32m\]\w]\[\033[0m\]\n\[\033[1;36m\]\u\[\033[1;33m\]-&gt; \[\033[0m\]&quot;
+#PS1='\[\e[1;32m\]\u@\H:\[\e[m\] \[\e[1;37m\]\w\[\e[m\]\n\[\e[1;33m\]hist:\! \[\e[0;33m\] \[\e[1;31m\]jobs:\j \$\[\e[m\] '
+#PS1=&quot;\n\[\e[30;1m\]\[\016\]l\[\017\](\[\e[34;1m\]\u@\h\[\e[30;1m\])-(\[\e[34;1m\]\j\[\e[30;1m\])-(\[\e[34;1m\]\@ \d\[\e[30;1m\])-&gt;\[\e[30;1m\]\n\[\016\]m\[\017\]-(\[\[\e[32;1m\]\w\[\e[30;1m\])-(\[\e[32;1m\]\$(/bin/ls -1 | /usr/bin/wc -l | /bin/sed 's: ::g') files, \$(/bin/ls -lah | /bin/grep -m 1 total | /bin/sed 's/total //')b\[\e[30;1m\])--&gt; \[\e[0m\]&quot;
+#PS1=&quot;\n\[\e[32;1m\](\[\e[37;1m\]\u\[\e[32;1m\])-(\[\e[37;1m\]jobs:\j\[\e[32;1m\])-(\[\e[37;1m\]\w\[\e[32;1m\])\n(\[\[\e[37;1m\]! \!\[\e[32;1m\])-&gt; \[\e[0m\]&quot;
+
+#if [ -z &quot;$SSH_CLIENT&quot; ]; then
+#PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[0;37m\]'
+#else
+#PS1='\[\e[0;32m\]\u\[\e[m\]\[\e[1;31m\]@\[\e[m\]\[\e[1;33m\]\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[0;37m\]'
+#fi
+#PS1=&quot;\n#--[\[\e[1;36m\]\u@\h\[\e[m\]]-[\[\e[1;34m\]\w\[\e[m\]]-[\$(date +%k:%M)]--&gt;\n&quot;
+#PS1=&quot;\n\[\e[30;1m\](\[\e[34;1m\]\u@\h\[\e[30;1m\])-(\[\e[34;1m\]\t\[\e[30;1m\])-(\[\[\e[32;1m\]\w\[\e[30;1m\])\[\e[30;1m\]\n(jobs:\[\e[34;1m\]\j\[\e[30;1m\])\`if [ \$? -eq 0 ]; then echo \[\e[32m\] \:\-\); else echo \[\e[31m\] \:\-\( ; fi\`\[\e[0m\] $ &quot;
+
+# Background
+#local gblack=&quot;\[\033[40m\]&quot; # Black
+
+
+# Background
+#local gblack=&quot;\[\033[40m\]&quot; # Black
+#local gred=&quot;\[\033[41m\]&quot; # Red
+#local ggreen=&quot;\[\033[42m\]&quot; # Green
+#local gyellow=&quot;\[\033[43m\]&quot; # Yellow
+#local gblue=&quot;\[\033[44m\]&quot; # Blue
+#local gpurple=&quot;\[\033[45m\]&quot; # Purple
+#local gcyan=&quot;\[\033[46m\]&quot; # Cyan
+#local gwhite=&quot;\[\033[47m\]&quot; # White
+
+# High Intensty
+#local hblack=&quot;\[\033[0;90m\]&quot; # Black
+#local hred=&quot;\[\033[0;91m\]&quot; # Red
+#local hgreen=&quot;\[\033[0;92m\]&quot; # Green
+#local hyellow=&quot;\[\033[0;93m\]&quot; # Yellow
+#local hblue=&quot;\[\033[0;94m\]&quot; # Blue
+#local hpurple=&quot;\[\033[0;95m\]&quot; # Purple
+#local hcyan=&quot;\[\033[0;96m\]&quot; # Cyan
+#local hwhite=&quot;\[\033[0;97m\]&quot; # White
+
+# Bold High Intensty
+#BIBlack=&quot;\[\033[1;90m\]&quot; # Black
+#BIRed=&quot;\[\033[1;91m\]&quot; # Red
+#BIGreen=&quot;\[\033[1;92m\]&quot; # Green
+#BIYellow=&quot;\[\033[1;93m\]&quot; # Yellow
+#BIBlue=&quot;\[\033[1;94m\]&quot; # Blue
+#BIPurple=&quot;\[\033[1;95m\]&quot; # Purple
+#BICyan=&quot;\[\033[1;96m\]&quot; # Cyan
+#BIWhite=&quot;\[\033[1;97m\]&quot; # White
+
+# High Intensty backgrounds
+#On_IBlack=&quot;\[\033[0;100m\]&quot; # Black
+#On_IRed=&quot;\[\033[0;101m\]&quot; # Red
+#On_IGreen=&quot;\[\033[0;102m\]&quot; # Green
+#On_IYellow=&quot;\[\033[0;103m\]&quot; # Yellow
+#On_IBlue=&quot;\[\033[0;104m\]&quot; # Blue
+#On_IPurple=&quot;\[\033[10;95m\]&quot; # Purple
+#On_ICyan=&quot;\[\033[0;106m\]&quot; # Cyan
+#On_IWhite=&quot;\[\033[0;107m\]&quot; # White
+
+#Time12h=&quot;\T&quot;
+#Time12a=&quot;\@&quot;
+#PathShort=&quot;\w&quot;
+#PathFull=&quot;\W&quot;
+#NewLine=&quot;\n&quot;
+#Jobs=&quot;\j&quot;
+
+#local GRAY=&quot;\[\033[1;30m\]&quot;
+#local LIGHT_GRAY=&quot;\[\033[0;37m\]&quot;
+#local CYAN=&quot;\[\033[0;36m\]&quot;
+#local LIGHT_CYAN=&quot;\[\033[1;36m\]&quot;
+#local NO_COLOUR=&quot;\[\033[0m\]&quot;
+
+#local temp=$(tty)
+#local GRAD1=${temp:5}
+
+#PS1=&quot;$TITLEBAR\
+#$GRAY-$CYAN-$LIGHT_CYAN(\
+#$CYAN\u$GRAY@$CYAN\h\
+#'$LIGHT_CYAN)$CYAN-$LIGHT_CYAN(\
+#$CYAN\#$GRAY/$CYAN$GRAD1\
+#$LIGHT_CYAN)$CYAN-$LIGHT_CYAN(\
+#$CYAN\$(date +%H%M)$GRAY/$CYAN\$(date +%d-%b-%y)\
+#$LIGHT_CYAN)$CYAN-$GRAY-\
+#$LIGHT_GRAY\n\
+#$GRAY-$CYAN-$LIGHT_CYAN(\
+#$CYAN\$$GRAY:$CYAN\w\
+#$LIGHT_CYAN)$CYAN-$GRAY-$LIGHT_GRAY &quot; 
+
+local Q=&quot;\[\033[0m\]&quot; # Text Reset
+local B='30m\]' # Black
+local R='31m\]' # Red
+local G='32m\]' # Green
+local Y='33m\]' # Yellow
+local M='34m\]' # Blue
+local P='35m\]' # Purple
+local C='36m\]' # Cyan
+local W='37m\]' # White
+# QEIOLKHJHFDSAZXV
+local N='\[\033[0;' # Normal color
+local B='\[\033[1;' # Bold
+local U='\[\033[4;' # Underline 
+
+#local DASH=&quot;$N$C─$Q&quot; # OK
+local DASH=&quot;$B$C─$Q&quot; # OK
+#PS1=&quot;$N$C┌$Q$DASH[¬\u]$DASH[@\h]$DASH[\w]$DASH[\T]\n$N$C└$Q$N$G&gt;$Q&quot; # OK
+#PS1=&quot;$N$C┌$Q$DASH[$B$R~\u$Q]$DASH[$B$Y@\h$Q]$DASH[$B$Y\w$Q]$DASH[\T]\n$N$C└$Q$N$G&gt;$Q&quot; # OK
+#PS1=&quot;$N$C┌$Q$DASH[$B$R~\u$Q]$DASH[$B$Y@\h$Q]$DASH[$B$Y\w$Q]$DASH[\T]\n$N$C└\$(ls -1 | wc -l | sed \&quot;s: ::g\&quot;) files, \$(ls -lah | grep -m 1 total | sed \&quot;s/total //\&quot;)\$Q$N$G&gt;$Q&quot; # OK
+# ✓✗●
+#https://wiki.archlinux.org/index.php/Color_Bash_Prompt
+PS1=&quot;\
+$B$C┌$Q$DASH\
+[$B$M\u$Q$B$Y@\h$Q]$DASH\
+[\$( echo \$? )]$DASH\
+[\#]$DASH\
+[\$(date +%k:%M.%S)]$DASH\
+[$B$Y\w$Q, \$(ls -1 | wc -l | sed \&quot;s: ::g\&quot;) files, \$(ls -lah | grep -m 1 total | sed \&quot;s/total //\&quot;)]\
+$B$G&gt;$Q\
+\n$B$C└$Q$B$G&gt;$Q\
+&quot;
+</code></pre>
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="copyright text-muted">Copyright &copy; David Lutton 2020/11/14</p>
+    </footer>
+
+</body>
+</html>
