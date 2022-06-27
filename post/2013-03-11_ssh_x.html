@@ -50,15 +50,40 @@
     </nav>
 
     <!-- Page Header -->
-    <header></header>
+    <!-- Set your background image for this header on the line below. -->
+    </br>
+    <header>
+        <h1></h1>
+        <hr>
+        <span class="subheading">by , </span>
+    </header>
 
-    <div class="container">
-        <br>
-        
-    </div>
+    <div class="container"><hr />
+<h2>blog_heading: SSH and a X session
+blog_subheading:
+blog_author: David Lutton
+blog_publish_date: 2013/03/11</h2>
+<p>Working example of Xnest and SSH from a VM.</p>
+<p><code>ssh -X</code> on to the host.<br />
+First install <em>Xnest</em> and a destop manager <em>lubuntu-desktop</em>.<br />
+<em>lubuntu-core</em> might be sufficient, need to check.</p>
+<p>Make a file, in this example, called <em>.xinitnest</em> with the contents:</p>
+<p><code>#!/bin/sh</code><br />
+<code>exec /usr/bin/lxsession -s Lubuntu -e LXDE</code><br />
+Then run:<br />
+<code>xinit ~/.xinitnest -- `which Xnest` :5 -geometry 1024x768</code><br />
+To test it.</p>
+<p>This can be run as a one liner as:<br />
+<code> ssh $HOST -X &quot;xinit ~/.xinitnest -- \`which Xnest\` :5 -geometry 1024x768&quot;</code>
+# :5 is arbitary, so is the geometry.</p>
+<p>Reference material:<br />
+The Gentoo wiki had <a href="http://www.gentoo-wiki.info/Xnest">this</a> and I also found <a href="http://shallowsky.com/blog/linux/double-x.html">this</a>. Which is more focused on getting multiple X sessions running.</p>
+</div>
 
     <!-- Footer -->
-    <footer></footer>
+    <footer>
+        <p class="copyright text-muted">Copyright &copy;  </p>
+    </footer>
 
 </body>
 </html>
