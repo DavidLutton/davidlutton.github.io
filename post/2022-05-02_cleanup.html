@@ -37,7 +37,7 @@
 
     <link rel="stylesheet" href="/css/site.css"/>
 
-    <title>Distance Change Correction dB</title>
+    <title>Shell Directroy Cleanup</title>
   </head>
   <body>
     
@@ -53,47 +53,23 @@
     <!-- Set your background image for this header on the line below. -->
     </br>
     <header>
-        <h1>Distance Change Correction dB</h1>
+        <h1>Shell Directroy Cleanup</h1>
         <hr>
-        <span class="subheading">by David Lutton, 2020/10/14</span>
+        <span class="subheading">by David Lutton, 2022/05/02</span>
     </header>
 
-    <div class="container">
-<h1>Purpose</h1>
-<p>Apply a correction for distance change</p>
-<h1>Presumptions</h1>
-<p>All distances are in far field for the frequiencies being considered</p>
-<h1>Where</h1>
-<p>Applied in CISPR 16-1-4 for sVSWR calibration</p>
-<h1>Product</h1>
-<p>Is dB loss/gain for distance change<br />
-Loss for increasing distance<br />
-Gain for reducing distance</p>
-<h1>Python</h1>
-<pre><code class="language-python">from numpy import log10
+    <div class="container"><pre><code class="language-bash">find . -type f -empty  -not -path '*/\.git/*'; 
+find . -type d -empty ! -name .git  -delete
 
-distance_measurement = 340  # cm
-distance_reference = 300  # cm
-x = 20 * log10(distance_measurement / distance_reference)
-# dB loss/gain for distance change
+find . -iname node_modules -exec rm -rfv &quot;{}&quot; \;
+find . -iname .ipynb_checkpoints -exec  rm -rfv &quot;{}&quot; \; 
+find . -iname __pycache__ -exec  rm -rfv &quot;{}&quot; \; 
 </code></pre>
-<h1>Example</h1>
-<div class="math amsmath">
-\begin{gather*}
-\begin{aligned}
-\mathrm{distance}_{measurement} &amp;= 340 \; 
-\\[10pt]
-\mathrm{distance}_{reference} &amp;= 300 \; 
-\\[10pt]
-x &amp;= 20 \cdot \log_{10} \left( \frac{ \mathrm{distance}_{measurement} }{ \mathrm{distance}_{reference} } \right) \\&amp;= 20 \cdot \log_{10} \left( \frac{ 340 }{ 300 } \right) \\&amp;= 1.087 \; \;\textrm{(dB loss/gain for distance change)}\\
-\end{aligned}
-\end{gather*}
-</div>
 </div>
 
     <!-- Footer -->
     <footer>
-        <p class="copyright text-muted">Copyright &copy; David Lutton 2020/10/14</p>
+        <p class="copyright text-muted">Copyright &copy; David Lutton 2022/05/02</p>
     </footer>
 
 </body>

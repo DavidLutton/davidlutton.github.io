@@ -2,3 +2,7 @@ jinja2
 
 # commonmark
 myst-parser
+
+# markdown-it-py[plugins]
+mdit-py-plugins
+

@@ -70,8 +70,7 @@
 Use <a href="https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html">geomspace</a> to produce array of frequencies, limited to integers with int64</p>
 <p>Where geomspace returns numbers spaced evenly on a log scale (a geometric progression).</p>
 <h1>Example</h1>
-<section class="amsmath">
-<eqn>
+<div class="math amsmath">
 \begin{gather*}
 \begin{aligned}
 \mathrm{decade} &amp;= \log_{10} \left( \frac{ \mathrm{stop Hz} }{ \mathrm{start Hz} } \right) \\&amp;= \log_{10} \left( \frac{ 230000000.0 }{ 150000.0 } \right) \\&amp;= 3.186  \\
@@ -81,18 +80,15 @@ Use <a href="https://numpy.org/doc/stable/reference/generated/numpy.geomspace.ht
 \mathrm{points} &amp;= \left \lceil \frac{ \mathrm{decade} }{ \log_{10} \left( factor \right) } \right \rceil \\&amp;=  \left \lceil \frac{ 3.186 }{ \log_{10} \left( 1.01 \right) } \right \rceil \\&amp;= 738  \\
 \end{aligned}
 \end{gather*}
-</eqn>
-</section>
+</div>
 <h2>Compact form</h2>
-<section class="amsmath">
-<eqn>
+<div class="math amsmath">
 \begin{gather*}
 \begin{aligned}
 \mathrm{points} &amp;= \left \lceil \frac{ \log_{10} \left( \frac{ \mathrm{stop Hz} }{ \mathrm{start Hz} } \right) }{ \log_{10} \left( \frac{ \mathrm{percent}_{step} }{ 100 } + 1 \right) } \right \rceil \\&amp;= \left \lceil \frac{ \log_{10} \left( \frac{ 230000000.0 }{ 150000.0 } \right) }{ \log_{10} \left( \frac{ 1 }{ 100 } + 1 \right) } \right \rceil \\&amp;= 738  \\
 \end{aligned}
 \end{gather*}
-</eqn>
-</section>
+</div>
 <h1>Python</h1>
 <pre><code class="language-python">from numpy import log10, geomspace, int64, ceil
 
